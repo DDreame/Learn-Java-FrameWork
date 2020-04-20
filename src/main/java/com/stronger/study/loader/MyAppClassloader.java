@@ -1,5 +1,6 @@
 package com.stronger.study.loader;
 
+import com.stronger.study.loader.log.PrintMyAppLogger;
 import lombok.SneakyThrows;
 import lombok.val;
 import lombok.var;
@@ -10,20 +11,25 @@ import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 
+import java.awt.print.PrinterGraphics;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Logger;
 
 import static org.objectweb.asm.Opcodes.*;
 
-public class MyApploader extends ClassLoader {
+public class MyAppClassloader extends ClassLoader {
 
+    PrintMyAppLogger logger;
 
-
-    public MyApploader(ClassLoader parent) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
+    public MyAppClassloader(ClassLoader parent, PrintMyAppLogger logger) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
         super(parent);
+        this.logger = logger;
     }
+
+
 
     @SneakyThrows
     protected Class<?> loadClass(String name, boolean resolve) {
@@ -54,6 +60,7 @@ public class MyApploader extends ClassLoader {
         val in = this.getParent().getResourceAsStream(name.replace(".", "/") + ".class");
         var bytes = new byte[in.available()];
         in.read(bytes);
+        logger.logInfo("LoadClass",name+"正在加载");
         return defineClass(name, bytes, 0, bytes.length);
     }
 

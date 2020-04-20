@@ -22,14 +22,14 @@ class ConfigLoader {
     private var config:HashMap<String,String> =HashMap<String,String>();
 
 
-    fun  setConfig(classloader : ClassLoader): HashMap<String,String>{
-        val classpath = File(classloader.getResource("").toURI())
-        val f = File(classpath, "conf")
-
-
-
-        return
-    }
+//    fun  setConfig(classloader : ClassLoader): HashMap<String,String>{
+//        val classpath = File(classloader.getResource("").toURI())
+//        val f = File(classpath, "conf")
+//
+//
+//
+//        return null
+//    }
 
 
 
