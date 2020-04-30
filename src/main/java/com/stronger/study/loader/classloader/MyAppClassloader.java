@@ -1,4 +1,4 @@
-package com.stronger.study.loader;
+package com.stronger.study.loader.classloader;
 
 import com.stronger.study.loader.log.PrintMyAppLogger;
 import lombok.SneakyThrows;
@@ -24,13 +24,14 @@ public class MyAppClassloader extends ClassLoader {
 
     PrintMyAppLogger logger;
 
-    public MyAppClassloader(ClassLoader parent, PrintMyAppLogger logger) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
+    public MyAppClassloader(ClassLoader parent, PrintMyAppLogger logger) {
         super(parent);
         this.logger = logger;
     }
 
 
 
+    @Override
     @SneakyThrows
     protected Class<?> loadClass(String name, boolean resolve) {
         return loadClass(name, resolve,true);
@@ -44,14 +45,21 @@ public class MyAppClassloader extends ClassLoader {
             return c;
         }
 
-        if (isBlackListClass(name)) c = this.getParent().loadClass(name);
+        if (isBlackListClass(name)){
+            c = this.getParent().loadClass(name);
+        }
 
-        if (c == null) if (enhance) c = loadAppClass(name);
-
+        if (c == null) {
+            if (enhance){
+                c = loadAppClass(name);
+            }
+        }
         if (null == c) {
             return super.loadClass(name, resolve);
         } else {
-            if (resolve) this.resolveClass(c);
+            if (resolve){
+                this.resolveClass(c);
+            }
             return c;
         }
     }
