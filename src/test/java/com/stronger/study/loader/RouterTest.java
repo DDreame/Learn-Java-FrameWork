@@ -1,8 +1,6 @@
 package com.stronger.study.loader;
 
-import com.stronger.study.controller.ControllerLoader;
 import com.stronger.study.controller.action.DefaultActionContext;
-import com.stronger.study.controller.router.BasicRouter;
 import com.stronger.study.controller.router.RouterAction;
 import com.stronger.study.loader.config.ConfigManager;
 import com.stronger.study.loader.context.MyAppContext;
@@ -12,15 +10,15 @@ import lombok.var;
 import java.util.HashMap;
 
 
-public class TestScanPackage {
+public class RouterTest {
 
     public static void main(String[] args) throws Exception {
         PrintMyAppLogger logger = new PrintMyAppLogger();
 
-        var myConfig = new ConfigManager().init(TestScanPackage.class.getClassLoader());
+        var myConfig = new ConfigManager().init(RouterTest.class.getClassLoader());
         MyAppContext context = new MyAppContext(logger,myConfig);
         context.putBean(null,context);
-        context.newBean(TestScanPackage.class,null,true);
+        context.newBean(RouterTest.class,null,true);
         MyApploader myApploader = (MyApploader) context.newBean(MyApploader.class,"apploader",true);
 
         myApploader.loadApp();
