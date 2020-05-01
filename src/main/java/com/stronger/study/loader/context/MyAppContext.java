@@ -44,6 +44,7 @@ public class MyAppContext {
      *    查找的时候多例的类交给工厂，
      *    由工厂进行返回
      */
+
     private ConcurrentHashMap<String,ConcurrentHashMap<String,Object>> myAppContext;
 
     private PrintMyAppLogger logger;
@@ -82,7 +83,7 @@ public class MyAppContext {
         objs.put(instanceName,obj);
         logger.logInfo("putBean",clazzName+" : "+instanceName+"  Loding");
         checkAutoBind(clazz.getSuperclass(),instanceName,obj);
-        for (Class clazs: clazz.getInterfaces()) {
+        for (Class<?> clazs: clazz.getInterfaces()) {
             checkAutoBind(clazs,instanceName,obj);
         }
 
@@ -99,9 +100,7 @@ public class MyAppContext {
         if(clazz == null) {
             return null;
         }
-        if(name == null){
-            name = "";
-        }
+
         val bean =createBeanInstance(clazz);
         if(bean == null){
             return null;

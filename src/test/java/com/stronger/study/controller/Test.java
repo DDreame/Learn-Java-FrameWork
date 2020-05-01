@@ -11,6 +11,7 @@ public class Test {
 
     @before
     public void test1(){
+        System.out.println("-----------Start----------");
         System.out.println("before Test！");
     }
 
@@ -20,8 +21,16 @@ public class Test {
         System.out.println("Action Test!");
     }
 
+
+    @Action("aaa")
+    public void test4(String value){
+        System.out.println("---------"+value+"2--------");
+        System.out.println("Action Test!");
+    }
     @after
     public void test3() {
+
         System.out.println("After Test!");
+        System.out.println("----------End-----------");
     }
 }

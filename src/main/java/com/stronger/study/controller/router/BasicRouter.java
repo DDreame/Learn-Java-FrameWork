@@ -14,7 +14,7 @@ public class BasicRouter {
     /**
      * 基础路径
      */
-    String Path;
+    String path;
     /**
      * 所有的before方法
      */

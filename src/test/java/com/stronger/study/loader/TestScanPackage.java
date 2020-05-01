@@ -9,12 +9,8 @@ import com.stronger.study.loader.context.MyAppContext;
 import com.stronger.study.loader.log.PrintMyAppLogger;
 import lombok.val;
 import lombok.var;
-
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+
 
 public class TestScanPackage {
 
@@ -36,8 +32,12 @@ public class TestScanPackage {
         HashMap<String,HashMap<Integer,Object>> arg = new HashMap<>();
         arg.put("test2",values);
         action.setArgs(arg);
-        routerAction.invoke("com.stronger.study.controller.Testqwe",action);
+        Object o = routerAction.invoke("com.stronger.study.controller.Testqwe",action);
 
+        action.setPath("com.stronger.study.controller.Testaaa");
+        arg.clear();
+        arg.put("test4",values);
+        Object o1 = routerAction.invoke("com.stronger.study.controller.Testaaa",action);
     }
 }
 

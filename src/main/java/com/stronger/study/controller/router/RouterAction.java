@@ -34,7 +34,7 @@ public class RouterAction {
             }
         }
         this.invoker(router.actionMethod,router.clazz,actionContext);
-        methods.clear();
+
         methods = router.getAfterMethods();
         if(methods.size() > 0){
             for(Method method: methods){
@@ -50,7 +50,8 @@ public class RouterAction {
         //判断返回值
         boolean returnFlag = false;
         //如果返回值类型为void则没有返回值，反之则存在返回值
-        if(!("void").equals(method.getReturnType().getName())){
+        String voidS = "void";
+        if(!(voidS).equals(method.getReturnType().getName())){
             returnFlag = true;
         }
         //获取所有参数类型

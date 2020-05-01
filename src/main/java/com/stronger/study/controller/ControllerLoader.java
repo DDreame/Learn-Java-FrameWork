@@ -29,10 +29,12 @@ public class ControllerLoader implements Loader {
     public void load(HashMap<String,Class<?>> loadItem) throws ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException {
 
         for (Map.Entry<String, Class<?>> entry : loadItem.entrySet()) {
-            BasicRouter router = new BasicRouter();
+
             Object instance = context.getBean(entry.getValue(),null);
-            if(instance == null) continue;
-            String path = instance.getClass().getName();
+            if(instance == null) {
+                continue;
+            }
+            ;
             Method[] methods = instance.getClass().getMethods();
             ArrayList<Method> beforeMethods = new ArrayList<Method>();
             ArrayList<Method> afterMethods = new ArrayList<Method>();
@@ -48,22 +50,27 @@ public class ControllerLoader implements Loader {
                     logger.logInfo("Loader", "After" + method.getName() + "正在载入");
                 }
             }
-            router.setBeforeMethods(beforeMethods);
-            router.setAfterMethods(afterMethods);
+
             for (Method method : methods) {
                 var action = method.getAnnotation(Action.class);
+                BasicRouter router = new BasicRouter();
+                String path = instance.getClass().getName();
                 if(action != null){
+
                     router.setActionMethod(method);
                     logger.logInfo("Loader", "Action" + method.getName() + "正在载入");
                     path = path+action.value();
                 }
+                if(router.getActionMethod() != null){
+                    router.setBeforeMethods(beforeMethods);
+                    router.setAfterMethods(afterMethods);
+                    router.setClazz(instance);
+                    router.setPath(path);
+                    routers.add(router);
+                    context.putBean(path,router);
+                }
             }
-            if(router.getActionMethod() != null){
-                router.setClazz(instance);
-                router.setPath(path);
-                routers.add(router);
-                context.putBean(path,router);
-            }
+
         }
     }
 }

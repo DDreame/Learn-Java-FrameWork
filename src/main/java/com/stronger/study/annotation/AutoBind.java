@@ -13,8 +13,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface AutoBind {
-    Class value() default AutoBind.class;
-
-    String name() default "";
+    Class<?> value() default AutoBind.class;
 }
 

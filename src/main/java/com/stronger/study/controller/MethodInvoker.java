@@ -15,10 +15,10 @@ public interface MethodInvoker {
     /**
      *
      * 传入方法调用具体方法
-     * @param method
-     * @param instance
-     * @param actionContext
-     * @return
+     * @param method 传入方法
+     * @param instance 传入实例
+     * @param actionContext 传入上下文
+     * @return 返回方法返回值
      * @throws InvocationTargetException
      * @throws IllegalAccessException
      */
